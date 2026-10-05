@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>부산 명지동 3237-9 견본주택 승계 전략 대시보드</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+      background-color: #fdfbf7;
+      color: #1e293b;
+    }
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 320px;
+      max-height: 400px;
+    }
+    @media (min-width: 768px) {
+      .chart-container {
+        height: 350px;
+      }
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+<!-- Chosen Palette: Warm Neutral Executive (Background: #fdfbf7, Card: #ffffff, Text: #1e293b, Accent: #d97706, Secondary: #0d9488, Border: #e2e8f0) -->
+
+<!-- Application Structure Plan:
+  1. Header / Navigation: Executive Title, Quick Key Metrics Ribbon, Interactive Section Anchor Navigation.
+  2. Section 1 - Master Overview & Key Strengths: Executive Summary with card-based key value highlights (CAPEX, Schedule, Location, Parking).
+  3. Section 2 - Financial & Schedule Benefits (Interactive Simulator):
+     - Interactive Financial Calculator: Slider-based dynamic financial cost savings calculator (Calculates CAPEX + Interest Saved).
+     - Chart 1: CAPEX & Financial Comparison (New Build vs Succession) with balanced bar margins and stacked category layout.
+     - Chart 2: Project Timeline Comparison (New Build vs Succession).
+  4. Section 3 - Location & Catchment Area Analysis:
+     - Interactive Location Advantage Cards (Ocean View, 3-Sided Corner, Infrastructure, Tram/Hospital).
+     - Interactive Catchment Area Selector (Ocean City, Eco Delta City, Myeongji Int'l City, Bu-Ul-Gyeong region) with dynamic text details.
+     - Chart 3: Catchment Area Household Scale Comparison.
+  5. Section 4 - Building Infrastructure & Traffic Flow Specs:
+     - Detailed Spec Cards (Land, Steel Frame, MEP, HVAC, Fire Safety).
+     - Interactive Parking & Drop-Off Zone Simulation display (3-Sided Corner loop details).
+  6. Section 5 - Strategic Roadmap & Terms:
+     - Interactive Project Timeline Stepper (2026.10 -> 2026.11.30 -> 2026.12.01 -> 2027.01 Grand Open).
+     - Lease Terms & Contact Details Card.
+  Reasoning: This structure reorganizes report slides into a logical decision-maker workflow with optimized Chart.js bar margin ratios.
+-->
+
+<!-- Visualization & Content Choices:
+  1. Financial Savings -> Dynamic Range Slider + Chart.js Stacked Bar with categoryPercentage padding -> Chart.js Canvas
+  2. Timeline Comparison -> Chart.js Horizontal Bar with margin spacing -> Chart.js Canvas
+  3. Catchment Household Scale -> Chart.js Bar Chart with centered bar layout -> Chart.js Canvas
+  4. Location / Infrastructure -> HTML/Tailwind Interactive Tabs/Cards with Emoji badges -> HTML/CSS
+  5. Parking Loop & Flow -> HTML Structured Process Cards -> HTML/CSS
+  Justification: Replaces unstacked side-by-side grouped zero-bars with stacked axes to perfectly center data bars and fix edge alignment issues without SVG/Mermaid.
+-->
+
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+  <!-- Header & Navigation -->
+  <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <div class="bg-amber-600 text-white font-black text-xl px-3 py-1 rounded-lg tracking-wider">MJ-3237</div>
+        <div>
+          <h1 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">부산 명지동 견본주택 승계 전략 대시보드</h1>
+          <p class="text-xs text-slate-500">강서구 명지동 3237-9번지 | 무상 승계 및 CAPEX 절감형 임대 제안</p>
+        </div>
+      </div>
+      
+      <!-- Nav Tabs -->
+      <nav class="flex items-center space-x-1 sm:space-x-2 text-xs sm:text-sm font-medium overflow-x-auto pb-1 md:pb-0 custom-scrollbar">
+        <button onclick="scrollToSection('section-overview')" class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700 whitespace-nowrap transition-colors">총괄 개요</button>
+        <button onclick="scrollToSection('section-financial')" class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700 whitespace-nowrap transition-colors">비용/일정 절감</button>
+        <button onclick="scrollToSection('section-location')" class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700 whitespace-nowrap transition-colors">입지/배후수요</button>
+        <button onclick="scrollToSection('section-infra')" class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700 whitespace-nowrap transition-colors">건축/주차 인프라</button>
+        <button onclick="scrollToSection('section-roadmap')" class="px-3 py-1.5 rounded-md hover:bg-slate-100 text-slate-700 whitespace-nowrap transition-colors">로드맵/조건</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Key Metrics Quick Banner -->
+  <section class="bg-amber-900 text-amber-50 py-4 px-4 sm:px-6 border-b border-amber-800">
+    <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+      <div class="border-r border-amber-700/50 last:border-r-0 pr-2">
+        <div class="text-xs text-amber-200">초기 건립비 (CAPEX) 절감</div>
+        <div class="text-xl sm:text-2xl font-black text-amber-300">약 35억 원 + α</div>
+      </div>
+      <div class="border-r border-amber-700/50 last:border-r-0 pr-2">
+        <div class="text-xs text-amber-200">개관 준비 공기 단축</div>
+        <div class="text-xl sm:text-2xl font-black text-amber-300">6개월 이상 단축</div>
+      </div>
+      <div class="border-r border-amber-700/50 last:border-r-0 pr-2">
+        <div class="text-xs text-amber-200">대지 면적 / 위치</div>
+        <div class="text-xl sm:text-2xl font-black text-amber-300">593평 / 3면 코너</div>
+      </div>
+      <div>
+        <div class="text-xs text-amber-200">명도 및 오픈 일정</div>
+        <div class="text-xl sm:text-2xl font-black text-amber-300">'26.11 명도 ➔ '27.01 오픈</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+    <!-- SECTION 1: 총괄 개요 (MASTER OVERVIEW) -->
+    <section id="section-overview" class="scroll-mt-20 space-y-6">
+      <div class="border-l-4 border-amber-600 pl-4">
+        <h2 class="text-2xl font-bold text-slate-900">1. 총괄 개요: 명지동 3237-9 견본주택 승계 마스터 플랜</h2>
+        <p class="text-slate-600 text-sm mt-1">
+          서부산권 주거 개발 사업의 분양 성공을 견인하기 위한 최적의 실행 전략은 검증된 집객 거점을 선점하고 초기 자본 지출을 최소화하는 데 있습니다. 본 섹션에서는 대우건설이 직영 관리해온 1군 규격의 하이엔드 견본주택 무상 승계 사업 개요와 핵심 사업 조건을 요약합니다.
+        </p>
+      </div>
+
+      <!-- Core Value Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition-shadow">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 font-bold flex items-center justify-center text-lg mb-4">🏛️</div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">검증된 하이엔드 자산 무상 승계</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              부산 강서구 명지동 3237-9번지 일반상업지역(약 593평) 내 1군 시공사(대우건설)가 구축한 가설건축물 골조, 파사드 및 핵심 기계·전기·소방 인프라를 무상 승계합니다.
+            </p>
+          </div>
+          <div class="mt-4 pt-4 border-t border-slate-100 text-xs font-semibold text-amber-700">
+            ✓ 신축 건립비 약 35억 원 즉시 방어
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition-shadow">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-teal-100 text-teal-700 font-bold flex items-center justify-center text-lg mb-4">⚡</div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">1.5개월 완성 초고속 리모델링</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              토목/골조 공정과 복잡한 신규 인허가 절차를 전면 생략합니다. 2026년 11월 30일 명도 직후 내부 유니트 시공에 착수하여 2027년 1월 초 그랜드 오픈이 가능합니다.
+            </p>
+          </div>
+          <div class="mt-4 pt-4 border-t border-slate-100 text-xs font-semibold text-teal-700">
+            ✓ 분양 골든타임 선점 (6개월 공기 단축)
+          </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition-shadow">
+          <div>
+            <div class="w-10 h-10 rounded-xl bg-slate-100 text-slate-700 font-bold flex items-center justify-center text-lg mb-4">🤝</div>
+            <h3 class="text-lg font-bold text-slate-900 mb-2">유연하고 안정적인 임대 조건</h3>
+            <p class="text-slate-600 text-sm leading-relaxed">
+              24개월 기본 확정 계약 및 월 5,000만 원(VAT 별도) 조건으로 추진되며, 사업 완료 후 후속 건설사 승계 지원 네트워크를 제공하여 원상복구 철거 리스크를 차단합니다.
+            </p>
+          </div>
+          <div class="mt-4 pt-4 border-t border-slate-100 text-xs font-semibold text-slate-700">
+            ✓ 보증금/납부조건 상호 협의 및 연장 옵션
+          </div>
+        </div>
+      </div>
+
+      <!-- Overview Table -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
+        <div class="bg-slate-50 px-6 py-4 border-b border-slate-200">
+          <h3 class="font-bold text-slate-900">사업 대상지 및 제안 조건 요약</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-sm">
+            <thead>
+              <tr class="bg-slate-100/50 text-slate-700 border-b border-slate-200">
+                <th class="py-3 px-6 font-semibold">사업 항목</th>
+                <th class="py-3 px-6 font-semibold">세부 내역 및 사업 조건</th>
+                <th class="py-3 px-6 font-semibold">전략적 의미 및 기대 효과</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200 text-slate-600">
+              <tr class="hover:bg-slate-50/80">
+                <td class="py-3.5 px-6 font-bold text-slate-900">사업 대상지</td>
+                <td class="py-3.5 px-6">부산광역시 강서구 명지동 3237-9번지 (일반상업지역)</td>
+                <td class="py-3.5 px-6">대지면적 1,960.4㎡(약 593평) 단독 필지, 3면 코너 접도</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="py-3.5 px-6 font-bold text-slate-900">건축물 현황</td>
+                <td class="py-3.5 px-6">대우건설 견본주택 기구축 및 직영 관리 중</td>
+                <td class="py-3.5 px-6">철골조 모던 파사드, 공조·특고압 수전·소방 인프라 완비</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="py-3.5 px-6 font-bold text-slate-900">핵심 경제성</td>
+                <td class="py-3.5 px-6">가설건축물 무상 승계 및 부지 임대차 연계</td>
+                <td class="py-3.5 px-6">신축비 약 35억 원 절감 + 개관 공기 6개월 절감 (PF 이자 방어)</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="py-3.5 px-6 font-bold text-slate-900">명도 & 개관 일정</td>
+                <td class="py-3.5 px-6">2026년 11월 30일 명도 ➔ 2027년 1월 초 그랜드 오픈</td>
+                <td class="py-3.5 px-6">12월 1일 리모델링 착수, 단 1.5개월 만에 완성하는 빠른 기동성</td>
+              </tr>
+              <tr class="hover:bg-slate-50/80">
+                <td class="py-3.5 px-6 font-bold text-slate-900">제안 임대차 조건</td>
+                <td class="py-3.5 px-6">24개월 기본 확정 계약 / 월 5,000만 원 (VAT 별도)</td>
+                <td class="py-3.5 px-6">보증금 및 납부 방식 협의 가능, 사업 일정에 따른 연장 옵션 부여</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: 비용 및 일정 절감 효과 (FINANCIAL & SCHEDULE SIMULATOR) -->
+    <section id="section-financial" class="scroll-mt-20 space-y-6">
+      <div class="border-l-4 border-amber-600 pl-4">
+        <h2 class="text-2xl font-bold text-slate-900">2. 비용 및 일정 절감: 재무적 현금흐름 개선 시뮬레이션</h2>
+        <p class="text-slate-600 text-sm mt-1">
+          신규 모델하우스 건립에는 수십억 원의 초기 매몰 비용과 6개월 이상의 준비 기간이 요구됩니다. 본 섹션에서는 무상 승계를 통한 CAPEX 절감 및 공기 단축에 따른 금융 비용 방어 효과를 대화형 시뮬레이터를 통해 직접 산출해 볼 수 있습니다.
+        </p>
+      </div>
+
+      <!-- Interactive Calculator Panel -->
+      <div class="bg-gradient-to-br from-amber-900 to-slate-900 text-white rounded-2xl p-6 shadow-md border border-amber-800 space-y-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b border-amber-800/80 pb-4 gap-2">
+          <div>
+            <h3 class="text-lg font-bold text-amber-300">🧮 프로젝트 금융 비용 절감액 대화형 시뮬레이터</h3>
+            <p class="text-xs text-amber-100/70">사업 조건 변수를 조정하여 신축 대비 본 승계안의 총 절감 가치를 확인하세요.</p>
+          </div>
+          <div class="bg-amber-600/30 border border-amber-500/40 px-3 py-1 rounded-full text-xs text-amber-200 self-start sm:self-auto">
+            실시간 연산 모듈
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Slider 1: Estimated New Build CAPEX -->
+          <div class="space-y-2">
+            <div class="flex justify-between text-xs text-amber-200">
+              <label for="input-capex" class="font-medium">타 부지 신축 예상 CAPEX</label>
+              <span id="val-capex" class="font-bold text-amber-300">35억 원</span>
+            </div>
+            <input type="range" id="input-capex" min="25" max="50" step="1" value="35" class="w-full accent-amber-500 cursor-pointer" oninput="updateFinancialCalc()">
+            <p class="text-[11px] text-amber-200/60">가설건축물, 철골, 외벽패널, MEP 포함</p>
+          </div>
+
+          <!-- Slider 2: Project Bridge Loan Size -->
+          <div class="space-y-2">
+            <div class="flex justify-between text-xs text-amber-200">
+              <label for="input-pf" class="font-medium">프로젝트 대출/PF 규모</label>
+              <span id="val-pf" class="font-bold text-amber-300">500억 원</span>
+            </div>
+            <input type="range" id="input-pf" min="200" max="1000" step="50" value="500" class="w-full accent-amber-500 cursor-pointer" oninput="updateFinancialCalc()">
+            <p class="text-[11px] text-amber-200/60">6개월 공기 단축에 따른 이자 방어액 산출용</p>
+          </div>
+
+          <!-- Slider 3: Interest Rate -->
+          <div class="space-y-2">
+            <div class="flex justify-between text-xs text-amber-200">
+              <label for="input-rate" class="font-medium">PF / 조달 연 이자율</label>
+              <span id="val-rate" class="font-bold text-amber-300">6.0 %</span>
+            </div>
+            <input type="range" id="input-rate" min="4.0" max="10.0" step="0.5" value="6.0" class="w-full accent-amber-500 cursor-pointer" oninput="updateFinancialCalc()">
+            <p class="text-[11px] text-amber-200/60">단축 기간(6개월) 동안의 금융이자 방어 비율</p>
+          </div>
+        </div>
+
+        <!-- Simulation Summary Box -->
+        <div class="bg-black/40 rounded-xl p-4 border border-amber-500/30 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+          <div>
+            <div class="text-xs text-amber-200/80">순수 CAPEX + 설비 절감액</div>
+            <div id="res-capex" class="text-xl font-bold text-amber-400 mt-1">40.0억 원</div>
+            <div class="text-[10px] text-amber-200/50">(건립비 35억 + MEP/인허가 5억)</div>
+          </div>
+          <div>
+            <div class="text-xs text-amber-200/80">6개월 공기단축 금융이자 절감</div>
+            <div id="res-interest" class="text-xl font-bold text-teal-400 mt-1">15.0억 원</div>
+            <div class="text-[10px] text-amber-200/50">(PF 대출금 이자 비용 방어)</div>
+          </div>
+          <div class="bg-amber-600/20 rounded-lg p-2 border border-amber-400/30">
+            <div class="text-xs text-amber-300 font-semibold">총 사업 재무 개선 가치</div>
+            <div id="res-total" class="text-2xl font-black text-amber-300 mt-0.5">55.0억 원</div>
+            <div class="text-[10px] text-amber-200/70">+ 철거비 3~5억 매몰 방어 추가</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual Charts Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Chart 1: Cost Comparison -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-slate-900 mb-1">투입 비용 세부 항목 비교 (억 원)</h3>
+            <p class="text-xs text-slate-500 mb-4">신축 건립 시 매몰되는 비용과 본 승계 제안의 투입비 비교</p>
+            <div class="chart-container">
+              <canvas id="chartCosts"></canvas>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500 mt-4 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+            💡 <strong>핵심:</strong> 무상 승계를 통해 가설건축물, 철골, 대용량 MEP, 소방인허가 등 초기 건립비 전액을 세이브하고 내부 유니트 리모델링비만 소요됩니다.
+          </p>
+        </div>
+
+        <!-- Chart 2: Timeline Comparison -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 flex flex-col justify-between">
+          <div>
+            <h3 class="font-bold text-slate-900 mb-1">오픈 준비 공정 기간 비교 (개월)</h3>
+            <p class="text-xs text-slate-500 mb-4">신축 공정(6~8개월) 대비 본 승계안(1.5개월)의 소요 기간 비교</p>
+            <div class="chart-container">
+              <canvas id="chartTimeline"></canvas>
+            </div>
+          </div>
+          <p class="text-xs text-slate-500 mt-4 bg-slate-50 p-2.5 rounded-lg border border-slate-100">
+            💡 <strong>핵심:</strong> 인허가, 토목, 철골 공정이 전면 생략되어 명도 후 1.5개월 만에 정식 오픈이 가능하여 분양 골든타임을 완벽히 선점합니다.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: 입지 및 배후 수요 (LOCATION & CATCHMENT ANALYSIS) -->
+    <section id="section-location" class="scroll-mt-20 space-y-6">
+      <div class="border-l-4 border-amber-600 pl-4">
+        <h2 class="text-2xl font-bold text-slate-900">3. 입지 및 배후 수요: 11만 주거벨트의 핵심 결절점</h2>
+        <p class="text-slate-600 text-sm mt-1">
+          사업지는 다대포 영구 바다 조망과 3면 코너라는 압도적 시인성을 보유하고 있습니다. 명지오션시티 1만 세대 항아리 상권 중심에 위치하며, 에코델타시티(3만 세대)와 명지국제신도시(2.8만 세대)의 수요가 교차하는 입지적 우위를 갖추고 있습니다.
+        </p>
+      </div>
+
+      <!-- Geographic Advantages Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+          <div class="text-2xl">🌊</div>
+          <h3 class="font-bold text-slate-900">영구 오션뷰 & 3면 코너</h3>
+          <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+            <li><strong>영구 바다 조망:</strong> 남동측 다대포 해안 파노라마 뷰 확보, VIP 라운지 배치 시 계약률 상승 효과.</li>
+            <li><strong>3면 광폭 접도:</strong> 360도 초대형 브랜드 그래픽 랩핑으로 랜드마크 옥외 홍보 극대화.</li>
+            <li><strong>수변 산책로 직결:</strong> 대지 전면 해안 수변공원 연결로 자연스러운 보행객 유입.</li>
+          </ul>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+          <div class="text-2xl">🏥</div>
+          <h3 class="font-bold text-slate-900">명지 부민병원 & 메디컬 타운</h3>
+          <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+            <li><strong>서부산 최대 종합병원:</strong> 지하 2층~지상 13층, 500병상 규모 명지 부민병원 착공 완료.</li>
+            <li><strong>집적 효과:</strong> 맞은편 여성아동병원 및 메디컬 센터 인접으로 상시 유동인구 풍부.</li>
+            <li><strong>직주근접 마케팅:</strong> 고소득 의료 전문 인력 및 관계자 대상 직접 마케팅 용이.</li>
+          </ul>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl shadow-sm border border-slate-200 space-y-3">
+          <div class="text-2xl">🚊</div>
+          <h3 class="font-bold text-slate-900">도시철도 강서선 & 도로망</h3>
+          <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
+            <li><strong>강서선 트램:</strong> 대저역~에코델타~명지국제~명지오션시티 연결(21.1km) 핵심 종점 거점.</li>
+            <li><strong>광역 간선도로:</strong> 르노삼성대로, 신호대교, 을숙도대교 직통 연계.</li>
+            <li><strong>광역 접근성:</strong> 부산 구도심, 창원, 김해 자차 20~30분대 손쉬운 접근.</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Interactive Catchment Area Selector -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 pb-4 gap-4">
+          <div>
+            <h3 class="font-bold text-slate-900">🎯 권역별 배후 수요층 및 집객 전략 탐색</h3>
+            <p class="text-xs text-slate-500">각 권역 버튼을 클릭하여 세부 타겟 프로필과 유입 동선을 확인하세요.</p>
+          </div>
+          <!-- Region Buttons -->
+          <div class="flex flex-wrap gap-2" id="catchment-buttons">
+            <button onclick="selectCatchment('ocean')" id="btn-ocean" class="px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors bg-amber-600 text-white border-amber-600">명지오션시티</button>
+            <button onclick="selectCatchment('eco')" id="btn-eco" class="px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200">에코델타시티</button>
+            <button onclick="selectCatchment('intl')" id="btn-intl" class="px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200">명지국제신도시</button>
+            <button onclick="selectCatchment('metro')" id="btn-metro" class="px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200">부울경 광역권</button>
+          </div>
+        </div>
+
+        <!-- Detail Box Dynamic Container -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+          <!-- Text Details -->
+          <div class="md:col-span-2 space-y-4" id="catchment-detail">
+            <!-- Dynamic content loaded via JS -->
+          </div>
+
+          <!-- Chart 3: Catchment Chart Container -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+            <h4 class="text-xs font-bold text-slate-700 text-center mb-2">권역별 세대 규모 비교 (가구 수)</h4>
+            <div class="chart-container" style="height:240px;">
+              <canvas id="chartCatchment"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: 건축 인프라 및 주차 (INFRASTRUCTURE & PARKING SPECS) -->
+    <section id="section-infra" class="scroll-mt-20 space-y-6">
+      <div class="border-l-4 border-amber-600 pl-4">
+        <h2 class="text-2xl font-bold text-slate-900">4. 건축물 인프라 스펙 및 대형 주차 시스템</h2>
+        <p class="text-slate-600 text-sm mt-1">
+          대우건설이 직접 시공하여 해안가 내풍압 및 염해보호 설계가 반영된 고품질 인프라입니다. 특고압 수전 및 대형 중앙 공조 설비가 완비되어 추가 공사비 없이 즉시 대형 미디어월 및 대규모 관람객을 수용할 수 있습니다.
+        </p>
+      </div>
+
+      <!-- Infrastructure Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+          <div class="text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded w-max">구조체 / 외관</div>
+          <h3 class="font-bold text-slate-900 text-sm">고강도 H형강 철골조</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            모던 단열 외벽 패널 및 대형 강화유리 커튼월 구축. 구조적 변형 없이 파사드 BI 그래픽 랩핑만으로 리모델링 완결.
+          </p>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+          <div class="text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded w-max">전기 수전 인프라</div>
+          <h3 class="font-bold text-slate-900 text-sm">특고압 대용량 수전 완비</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            독립 분전반 및 대용량 수전설비 기인입. 전력 증설 공사 없이 미디어 파사드, 초대형 모형도 및 키오스크 즉각 가동.
+          </p>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+          <div class="text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded w-max">HVAC 공조 시스템</div>
+          <h3 class="font-bold text-slate-900 text-sm">중앙집중식 환기 공조</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            대형 공조기 및 천장형 시스템 에어컨 전 층 구축. 주말 다중 인파 운집 시에도 최적 실내 온습도 및 공기질 유지.
+          </p>
+        </div>
+
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm space-y-2">
+          <div class="text-xs font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded w-max">소방 방재 안전</div>
+          <h3 class="font-bold text-slate-900 text-sm">소방완비증명 기취득</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            스프링클러, 감지기, 유도등, 비상 직통계단 완비. 소방서 인허가 보완 요청에 따른 오픈 지연 리스크 원천 차단.
+          </p>
+        </div>
+      </div>
+
+      <!-- Parking & Traffic Flow Feature Section -->
+      <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-sm border border-slate-800 space-y-6">
+        <div>
+          <span class="text-xs font-bold text-amber-400 tracking-wider uppercase">Parking & Traffic Solution</span>
+          <h3 class="text-xl font-bold text-white mt-1">대지 593평 기반 단독 자주식 주차장 및 3면 코너 순환 동선</h3>
+          <p class="text-slate-400 text-xs mt-1">
+            모델하우스 방문 만족도를 높이고 불법 주정차 민원을 차단하는 효율적 동선 체계입니다.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-2">
+            <div class="text-amber-400 font-bold text-sm flex items-center gap-2">
+              <span>🚗</span> 자주식 광폭 주차면
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              기계식 주차 타워에서 발생하는 출차 입고 대기, 기계 고장 및 대기 줄서기 현상이 전혀 없습니다. 대형 패밀리 SUV도 편안한 문콕 방지형 규격 적용.
+            </p>
+          </div>
+
+          <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-2">
+            <div class="text-amber-400 font-bold text-sm flex items-center gap-2">
+              <span>🔄</span> 3면 코너 One-Way 순환
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              3개 접도면을 활용하여 진입로와 진출로를 완전히 분리. 일방통행 방식의 대지 내 드라이브웨이를 통해 주말 피크타임 병목 및 꼬리물기를 예방합니다.
+            </p>
+          </div>
+
+          <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-2">
+            <div class="text-amber-400 font-bold text-sm flex items-center gap-2">
+              <span>🚌</span> 45인승 버스 회차 Drop-Off
+            </div>
+            <p class="text-xs text-slate-300 leading-relaxed">
+              건설 현장-모델하우스를 연계하는 셔틀버스 및 VIP 의전 버스가 안전하게 정차하고 회차할 수 있는 광폭 드롭오프 존(Drop-Off Zone)을 확보했습니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: 추진 일정 및 임대 조건 (ROADMAP & LEASE TERMS) -->
+    <section id="section-roadmap" class="scroll-mt-20 space-y-6">
+      <div class="border-l-4 border-amber-600 pl-4">
+        <h2 class="text-2xl font-bold text-slate-900">5. 업무 추진 일정 및 전략적 임대 제안 조건</h2>
+        <p class="text-slate-600 text-sm mt-1">
+          2026년 11월 30일 대우건설 무손상 명도가 확정되어 있어, 12월 1일 즉시 공사에 착수할 수 있습니다. 2027년 1월 정식 그랜드 오픈 로드맵 및 구체적 계약 협의 조건을 안내합니다.
+        </p>
+      </div>
+
+      <!-- Roadmap Timeline Stepper -->
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-6">
+        <h3 class="font-bold text-slate-900">📅 2026~2027 사업 추진 로드맵</h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 relative">
+          <!-- Step 1 -->
+          <div class="bg-amber-50 border border-amber-200 p-4 rounded-xl relative space-y-2">
+            <div class="text-xs font-black text-amber-700">STEP 01</div>
+            <div class="font-bold text-slate-900 text-sm">2026년 10월</div>
+            <div class="text-xs font-semibold text-slate-700">조건 확정 및 우선협상</div>
+            <p class="text-[11px] text-slate-500">
+              • 임대차 계약 체결<br>
+              • 기존 도면 공유 및 유니트 설계<br>
+              • 인테리어 사전 발주
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="bg-amber-100/60 border border-amber-300 p-4 rounded-xl relative space-y-2">
+            <div class="text-xs font-black text-amber-800">STEP 02</div>
+            <div class="font-bold text-slate-900 text-sm">2026년 11월 30일</div>
+            <div class="text-xs font-semibold text-slate-700">무손상 명도 및 인수인계</div>
+            <p class="text-[11px] text-slate-500">
+              • 대우건설 계약 종료 퇴거<br>
+              • 파사드/골조/MEP 인수인계<br>
+              • 현장 인허가 승계 신고
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="bg-amber-500 text-white p-4 rounded-xl relative space-y-2 shadow-md">
+            <div class="text-xs font-black text-amber-100">STEP 03</div>
+            <div class="font-bold text-white text-sm">2026년 12월 01일</div>
+            <div class="text-xs font-semibold text-amber-100">현장 착공 & 리모델링</div>
+            <p class="text-[11px] text-amber-50/90">
+              • 외벽 BI 그래픽 랩핑 교체<br>
+              • 내부 세대 유니트 목공/전기 공사<br>
+              • 단 1.5개월 만에 집중 완성
+            </p>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="bg-slate-900 text-white p-4 rounded-xl relative space-y-2">
+            <div class="text-xs font-black text-amber-400">STEP 04</div>
+            <div class="font-bold text-white text-sm">2027년 01월 초</div>
+            <div class="text-xs font-semibold text-amber-300">그랜드 오픈 (Grand Open)</div>
+            <p class="text-[11px] text-slate-300">
+              • 분양 승인 득 완료<br>
+              • 청약 내방객 공식 개관<br>
+              • 서부산권 분양 골든타임 선점
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Lease Terms & Contact Box -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Terms Card -->
+        <div class="md:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-slate-200 space-y-4">
+          <h3 class="font-bold text-slate-900 border-b border-slate-100 pb-3">📋 상세 제안 임대 조건</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div class="p-3 bg-slate-50 rounded-lg">
+              <span class="text-slate-500 block mb-1">임대 계약 기간</span>
+              <strong class="text-sm text-slate-900">기본 2년 (24개월) 확정 계약</strong>
+              <p class="text-[11px] text-slate-500 mt-1">분양 진행률 및 후속 현장에 따라 연장 옵션 상호 협의</p>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-lg">
+              <span class="text-slate-500 block mb-1">임대료 조건</span>
+              <strong class="text-sm text-amber-700">월 5,000만 원 (VAT 별도)</strong>
+              <p class="text-[11px] text-slate-500 mt-1">보증금 규모 및 지급 방식 협의 가능</p>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-lg">
+              <span class="text-slate-500 block mb-1">무상 양도 범위</span>
+              <strong class="text-sm text-slate-900">기존 골조, 파사드, MEP 일체</strong>
+              <p class="text-[11px] text-slate-500 mt-1">신축 CAPEX 약 35억 원 상당 순수 세이브</p>
+            </div>
+            <div class="p-3 bg-slate-50 rounded-lg">
+              <span class="text-slate-500 block mb-1">원상복구 헤징지원</span>
+              <strong class="text-sm text-slate-900">차기 건설사 승계 네트워크 연계</strong>
+              <p class="text-[11px] text-slate-500 mt-1">사업 종료 후 철거비 매몰 위험 방어 협력</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Representative Card -->
+        <div class="bg-gradient-to-br from-amber-600 to-amber-700 text-white p-6 rounded-2xl shadow-sm flex flex-col justify-between space-y-4">
+          <div>
+            <div class="text-xs text-amber-200 font-bold uppercase tracking-wider">Business Contact</div>
+            <h3 class="text-xl font-black mt-1">네오하우징 주식회사</h3>
+            <p class="text-xs text-amber-100/90 mt-2 leading-relaxed">
+              본 자산에 대한 현장 답사, 도면 수령 및 세부 승계 조건 협의를 위해 상시 현장 실사를 지원합니다.
+            </p>
+          </div>
+
+          <div class="bg-amber-800/50 p-4 rounded-xl border border-amber-500/40 space-y-2">
+            <div class="text-xs text-amber-200">총괄 대표이사</div>
+            <div class="text-lg font-bold text-white">조성열 대표</div>
+            <div class="text-sm font-black text-amber-300 tracking-wider">📞 010-2584-3115</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs">
+      <div>
+        <p class="font-bold text-slate-200">부산 명지동 3237-9 견본주택 승계 제안서 대시보드</p>
+      </div>
+      <div class="text-slate-500">
+        © 2026 Neo Housing Co., Ltd. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Inline JavaScript Logic -->
+  <script>
+    // --- Smooth Scroll Function ---
+    function scrollToSection(sectionId) {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    // --- Dynamic Interactive Financial Calculator ---
+    function updateFinancialCalc() {
+      const capex = parseFloat(document.getElementById('input-capex').value);
+      const pf = parseFloat(document.getElementById('input-pf').value);
+      const rate = parseFloat(document.getElementById('input-rate').value);
+
+      // UI text update
+      document.getElementById('val-capex').innerText = capex.toFixed(0) + '억 원';
+      document.getElementById('val-pf').innerText = pf.toFixed(0) + '억 원';
+      document.getElementById('val-rate').innerText = rate.toFixed(1) + ' %';
+
+      // Calculation:
+      // Direct savings = CAPEX + 5억 (MEP/인허가)
+      const directSavings = capex + 5.0;
+      // 6 months interest saved = PF * (rate / 100) * (6 / 12)
+      const interestSavings = pf * (rate / 100) * 0.5;
+      const totalBenefit = directSavings + interestSavings;
+
+      document.getElementById('res-capex').innerText = directSavings.toFixed(1) + '억 원';
+      document.getElementById('res-interest').innerText = interestSavings.toFixed(1) + '억 원';
+      document.getElementById('res-total').innerText = totalBenefit.toFixed(1) + '억 원';
+
+      // Dynamic chart update if chart exists
+      if (window.costChart) {
+        window.costChart.data.datasets[0].data = [capex + 5, 0];
+        window.costChart.data.datasets[1].data = [0, 8];
+        window.costChart.update();
+      }
+    }
+
+    // --- Interactive Catchment Selector Data ---
+    const catchmentData = {
+      ocean: {
+        title: "명지오션시티 (현장 반경 500m)",
+        scale: "10,000여 세대 기축 단지",
+        target: "입주 13~15년 차 교체 수요, 중대형 이동 희망 거주민",
+        access: "도보 3~10분 거리, 일상 소비 동선 밀착",
+        strategy: "11자 중심상권 남단 끝자락 입지로 지역민 일상 노출. 영구 오션뷰 VIP 라운지 연계 고급 마케팅 집중.",
+        badge: "도보 내방 가능"
+      },
+      eco: {
+        title: "에코델타시티 (반경 3~5km)",
+        scale: "30,000가구 / 76,000명 계획",
+        target: "3040세대 무주택 특별공급 대기자, 신규 택지 청약자",
+        access: "공항로/에코델타로 자차 7분 직결",
+        strategy: "대우건설 트레파크 완판으로 검증된 청약자 인지도 완비. 현장 임장 후 셔틀버스를 통한 모델하우스 직통 연계 관람 동선.",
+        badge: "차량 7분 연계"
+      },
+      intl: {
+        title: "명지국제신도시 1·2단계 (반경 1.5~2km)",
+        scale: "28,000여 세대 조성",
+        target: "고소득 전문직, 신축 브랜드 분양 투자자, 인근 산단 종사자",
+        access: "차량 5분 이내 진입, 중심대로 직통 연계",
+        strategy: "부산 서부 법조·업무 중심 타운의 배후 평형 변경 갈아타기 수요 흡수.",
+        badge: "차량 5분 접근"
+      },
+      metro: {
+        title: "부울경 광역 권역 (반경 20km)",
+        scale: "김해, 창원 진해구, 부산 사하·사상구",
+        target: "가덕도신공항 비전 투자자, 광역 산업단지 종사자",
+        access: "신호대교, 을숙도대교, 남해고속도로 제2지선 20분대",
+        strategy: "593평 단독 대지의 광폭 자주식 주차 편의성을 앞세워 주말 원정 청약단 및 VIP 고객 집객.",
+        badge: "광역 20분대"
+      }
+    };
+
+    function selectCatchment(key) {
+      const data = catchmentData[key];
+      const buttons = ['ocean', 'eco', 'intl', 'metro'];
+
+      buttons.forEach(b => {
+        const btn = document.getElementById('btn-' + b);
+        if (b === key) {
+          btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors bg-amber-600 text-white border-amber-600";
+        } else {
+          btn.className = "px-3 py-1.5 rounded-lg text-xs font-bold border transition-colors bg-slate-100 text-slate-700 border-slate-200 hover:bg-slate-200";
+        }
+      });
+
+      const container = document.getElementById('catchment-detail');
+      container.innerHTML = `
+        <div class="space-y-3 animate-fade-in">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold bg-amber-100 text-amber-800 px-2 py-0.5 rounded">${data.badge}</span>
+            <h4 class="text-lg font-bold text-slate-900">${data.title}</h4>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+              <span class="text-slate-500 block mb-0.5">공급 / 세대 규모</span>
+              <strong class="text-slate-800">${data.scale}</strong>
+            </div>
+            <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
+              <span class="text-slate-500 block mb-0.5">주요 타겟 고객층</span>
+              <strong class="text-slate-800">${data.target}</strong>
+            </div>
+          </div>
+          <div class="bg-amber-50/60 p-3 rounded-lg border border-amber-100 text-xs text-slate-700 space-y-1">
+            <strong class="text-amber-900 block">전략적 유입 및 전환 시나리오</strong>
+            <p>${data.strategy}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // --- Chart.js Initializations ---
+    window.addEventListener('DOMContentLoaded', () => {
+      // Initialize Default Catchment Detail Text
+      selectCatchment('ocean');
+
+      // Chart 1: Cost Comparison (Stacked Bar for exact centered alignment)
+      const ctxCosts = document.getElementById('chartCosts').getContext('2d');
+      window.costChart = new Chart(ctxCosts, {
+        type: 'bar',
+        data: {
+          labels: ['타 부지 신규 건립', '명지동 3237-9 승계안'],
+          datasets: [
+            {
+              label: '초기 건립비 (CAPEX + MEP)',
+              data: [40, 0],
+              backgroundColor: '#d97706',
+              borderWidth: 0,
+              borderRadius: 4
+            },
+            {
+              label: '내부 유니트 리모델링비',
+              data: [0, 8],
+              backgroundColor: '#0d9488',
+              borderWidth: 0,
+              borderRadius: 4
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          categoryPercentage: 0.45,
+          barPercentage: 0.8,
+          plugins: {
+            legend: { position: 'bottom', labels: { boxWidth: 12, font: { size: 11 } } },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.dataset.label + ': 약 ' + context.raw + '억 원';
+                }
+              }
+            }
+          },
+          scales: {
+            x: { 
+              stacked: true,
+              grid: { display: false } 
+            },
+            y: {
+              stacked: true,
+              beginAtZero: true,
+              title: { display: true, text: '비용 (억 원)', font: { size: 11 } }
+            }
+          }
+        }
+      });
+
+      // Chart 2: Timeline Comparison (Horizontal Bar)
+      const ctxTimeline = document.getElementById('chartTimeline').getContext('2d');
+      new Chart(ctxTimeline, {
+        type: 'bar',
+        indexAxis: 'y',
+        data: {
+          labels: ['타 부지 신규 건립', '명지동 3237-9 승계안'],
+          datasets: [{
+            label: '소요 공기 (개월)',
+            data: [7.5, 1.5],
+            backgroundColor: ['#94a3b8', '#d97706'],
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          categoryPercentage: 0.5,
+          barPercentage: 0.8,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return '소요 기간: ' + context.raw + ' 개월';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              max: 9,
+              title: { display: true, text: '기간 (개월)', font: { size: 11 } }
+            },
+            y: { grid: { display: false } }
+          }
+        }
+      });
+
+      // Chart 3: Catchment Scale Comparison
+      const ctxCatchment = document.getElementById('chartCatchment').getContext('2d');
+      new Chart(ctxCatchment, {
+        type: 'bar',
+        data: {
+          labels: ['명지오션', '에코델타', '명지국제'],
+          datasets: [{
+            label: '계획/기축 가구 수 (만 세대)',
+            data: [1.0, 3.0, 2.8],
+            backgroundColor: ['#f59e0b', '#0d9488', '#6366f1'],
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          categoryPercentage: 0.5,
+          barPercentage: 0.8,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return context.label + ': 약 ' + context.raw + '만 세대';
+                }
+              }
+            }
+          },
+          scales: {
+            x: { grid: { display: false } },
+            y: { beginAtZero: true, ticks: { stepSize: 1 } }
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
