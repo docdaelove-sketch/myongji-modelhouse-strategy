@@ -44,39 +44,6 @@
 </head>
 <body class="min-h-screen flex flex-col antialiased">
 
-<!-- Chosen Palette: Warm Neutral Executive (Background: #fdfbf7, Card: #ffffff, Text: #1e293b, Accent: #d97706, Secondary: #0d9488, Border: #e2e8f0) -->
-
-<!-- Application Structure Plan:
-  1. Header / Navigation: Executive Title, Quick Key Metrics Ribbon, Interactive Section Anchor Navigation.
-  2. Section 1 - Master Overview & Key Strengths: Executive Summary with card-based key value highlights (CAPEX, Schedule, Location, Parking).
-  3. Section 2 - Financial & Schedule Benefits (Interactive Simulator):
-     - Interactive Financial Calculator: Slider-based dynamic financial cost savings calculator (Calculates CAPEX + Interest Saved).
-     - Chart 1: CAPEX & Financial Comparison (New Build vs Succession) with balanced bar margins and stacked category layout.
-     - Chart 2: Project Timeline Comparison (New Build vs Succession).
-  4. Section 3 - Location & Catchment Area Analysis:
-     - Interactive Location Advantage Cards (Ocean View, 3-Sided Corner, Infrastructure, Tram/Hospital).
-     - Interactive Catchment Area Selector (Ocean City, Eco Delta City, Myeongji Int'l City, Bu-Ul-Gyeong region) with dynamic text details.
-     - Chart 3: Catchment Area Household Scale Comparison.
-  5. Section 4 - Building Infrastructure & Traffic Flow Specs:
-     - Detailed Spec Cards (Land, Steel Frame, MEP, HVAC, Fire Safety).
-     - Interactive Parking & Drop-Off Zone Simulation display (3-Sided Corner loop details).
-  6. Section 5 - Strategic Roadmap & Terms:
-     - Interactive Project Timeline Stepper (2026.10 -> 2026.11.30 -> 2026.12.01 -> 2027.01 Grand Open).
-     - Lease Terms & Contact Details Card.
-  Reasoning: This structure reorganizes report slides into a logical decision-maker workflow with optimized Chart.js bar margin ratios.
--->
-
-<!-- Visualization & Content Choices:
-  1. Financial Savings -> Dynamic Range Slider + Chart.js Stacked Bar with categoryPercentage padding -> Chart.js Canvas
-  2. Timeline Comparison -> Chart.js Horizontal Bar with margin spacing -> Chart.js Canvas
-  3. Catchment Household Scale -> Chart.js Bar Chart with centered bar layout -> Chart.js Canvas
-  4. Location / Infrastructure -> HTML/Tailwind Interactive Tabs/Cards with Emoji badges -> HTML/CSS
-  5. Parking Loop & Flow -> HTML Structured Process Cards -> HTML/CSS
-  Justification: Replaces unstacked side-by-side grouped zero-bars with stacked axes to perfectly center data bars and fix edge alignment issues without SVG/Mermaid.
--->
-
-<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
-
   <!-- Header & Navigation -->
   <header class="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-slate-200 shadow-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
@@ -104,7 +71,7 @@
     <div class="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
       <div class="border-r border-amber-700/50 last:border-r-0 pr-2">
         <div class="text-xs text-amber-200">초기 건립비 (CAPEX) 절감</div>
-        <div class="text-xl sm:text-2xl font-black text-amber-300">약 35억 원 + α</div>
+        <div class="text-xl sm:text-2xl font-black text-amber-300">약 30억 원 + α</div>
       </div>
       <div class="border-r border-amber-700/50 last:border-r-0 pr-2">
         <div class="text-xs text-amber-200">개관 준비 공기 단축</div>
@@ -132,6 +99,17 @@
           서부산권 주거 개발 사업의 분양 성공을 견인하기 위한 최적의 실행 전략은 검증된 집객 거점을 선점하고 초기 자본 지출을 최소화하는 데 있습니다. 본 섹션에서는 대우건설이 직영 관리해온 1군 규격의 하이엔드 견본주택 무상 승계 사업 개요와 핵심 사업 조건을 요약합니다.
         </p>
       </div>
+      
+      <!-- 성공 자리 강조 배너 추가 -->
+      <div class="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-start gap-4">
+        <div class="text-blue-600 text-2xl">🏆</div>
+        <div>
+          <h3 class="text-sm font-bold text-blue-900">검증된 성공의 자리, 수만 명의 발길이 머문 랜드마크</h3>
+          <p class="text-xs text-blue-800 mt-1">
+            본 사업지는 대우건설이 불과 1년여 만에 <strong>"에코델타시티 푸르지오 트레파크" 1,370세대를 성공적으로 완판</strong>시킨 바로 그 자리입니다. 모델하우스 운영 기간 동안 수만 명의 방문객이 다녀가며 입지적 인지도가 완벽하게 각인된, 검증된 분양 성공 거점입니다.
+          </p>
+        </div>
+      </div>
 
       <!-- Core Value Grid -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -144,7 +122,7 @@
             </p>
           </div>
           <div class="mt-4 pt-4 border-t border-slate-100 text-xs font-semibold text-amber-700">
-            ✓ 신축 건립비 약 35억 원 즉시 방어
+            ✓ 신축 건립비 약 30억 원 즉시 방어
           </div>
         </div>
 
@@ -203,7 +181,7 @@
               <tr class="hover:bg-slate-50/80">
                 <td class="py-3.5 px-6 font-bold text-slate-900">핵심 경제성</td>
                 <td class="py-3.5 px-6">가설건축물 무상 승계 및 부지 임대차 연계</td>
-                <td class="py-3.5 px-6">신축비 약 35억 원 절감 + 개관 공기 6개월 절감 (PF 이자 방어)</td>
+                <td class="py-3.5 px-6">신축비 약 30억 원 절감 + 개관 공기 6개월 절감 (PF 이자 방어)</td>
               </tr>
               <tr class="hover:bg-slate-50/80">
                 <td class="py-3.5 px-6 font-bold text-slate-900">명도 & 개관 일정</td>
@@ -247,9 +225,9 @@
           <div class="space-y-2">
             <div class="flex justify-between text-xs text-amber-200">
               <label for="input-capex" class="font-medium">타 부지 신축 예상 CAPEX</label>
-              <span id="val-capex" class="font-bold text-amber-300">35억 원</span>
+              <span id="val-capex" class="font-bold text-amber-300">30억 원</span>
             </div>
-            <input type="range" id="input-capex" min="25" max="50" step="1" value="35" class="w-full accent-amber-500 cursor-pointer" oninput="updateFinancialCalc()">
+            <input type="range" id="input-capex" min="20" max="50" step="1" value="30" class="w-full accent-amber-500 cursor-pointer" oninput="updateFinancialCalc()">
             <p class="text-[11px] text-amber-200/60">가설건축물, 철골, 외벽패널, MEP 포함</p>
           </div>
 
@@ -278,8 +256,8 @@
         <div class="bg-black/40 rounded-xl p-4 border border-amber-500/30 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
           <div>
             <div class="text-xs text-amber-200/80">순수 CAPEX + 설비 절감액</div>
-            <div id="res-capex" class="text-xl font-bold text-amber-400 mt-1">40.0억 원</div>
-            <div class="text-[10px] text-amber-200/50">(건립비 35억 + MEP/인허가 5억)</div>
+            <div id="res-capex" class="text-xl font-bold text-amber-400 mt-1">35.0억 원</div>
+            <div class="text-[10px] text-amber-200/50">(건립비 30억 + MEP/인허가 5억)</div>
           </div>
           <div>
             <div class="text-xs text-amber-200/80">6개월 공기단축 금융이자 절감</div>
@@ -288,7 +266,7 @@
           </div>
           <div class="bg-amber-600/20 rounded-lg p-2 border border-amber-400/30">
             <div class="text-xs text-amber-300 font-semibold">총 사업 재무 개선 가치</div>
-            <div id="res-total" class="text-2xl font-black text-amber-300 mt-0.5">55.0억 원</div>
+            <div id="res-total" class="text-2xl font-black text-amber-300 mt-0.5">50.0억 원</div>
             <div class="text-[10px] text-amber-200/70">+ 철거비 3~5억 매몰 방어 추가</div>
           </div>
         </div>
@@ -329,9 +307,9 @@
     <!-- SECTION 3: 입지 및 배후 수요 (LOCATION & CATCHMENT ANALYSIS) -->
     <section id="section-location" class="scroll-mt-20 space-y-6">
       <div class="border-l-4 border-amber-600 pl-4">
-        <h2 class="text-2xl font-bold text-slate-900">3. 입지 및 배후 수요: 11만 주거벨트의 핵심 결절점</h2>
+        <h2 class="text-2xl font-bold text-slate-900">3. 입지 및 배후 수요: 11.3만 주거벨트의 핵심 결절점</h2>
         <p class="text-slate-600 text-sm mt-1">
-          사업지는 다대포 영구 바다 조망과 3면 코너라는 압도적 시인성을 보유하고 있습니다. 명지오션시티 1만 세대 항아리 상권 중심에 위치하며, 에코델타시티(3만 세대)와 명지국제신도시(2.8만 세대)의 수요가 교차하는 입지적 우위를 갖추고 있습니다.
+          사업지는 영구 바다 조망과 3면 코너라는 압도적 시인성을 보유하고 있습니다. 명지오션시티 2.9만 명의 항아리 상권 중심에 위치하며, 에코델타시티(3만 세대)와 명지국제신도시(5.4만 명)의 인구 유입이 지속적으로 늘고 있는 거대한 배후 수요가 교차하는 입지적 우위를 갖추고 있습니다.
         </p>
       </div>
 
@@ -341,7 +319,7 @@
           <div class="text-2xl">🌊</div>
           <h3 class="font-bold text-slate-900">영구 오션뷰 & 3면 코너</h3>
           <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
-            <li><strong>영구 바다 조망:</strong> 남동측 다대포 해안 파노라마 뷰 확보, VIP 라운지 배치 시 계약률 상승 효과.</li>
+            <li><strong>영구 바다 조망:</strong> 남동측 해안 파노라마 뷰 확보, VIP 라운지 배치 시 계약률 상승 효과.</li>
             <li><strong>3면 광폭 접도:</strong> 360도 초대형 브랜드 그래픽 랩핑으로 랜드마크 옥외 홍보 극대화.</li>
             <li><strong>수변 산책로 직결:</strong> 대지 전면 해안 수변공원 연결로 자연스러운 보행객 유입.</li>
           </ul>
@@ -361,7 +339,7 @@
           <div class="text-2xl">🚊</div>
           <h3 class="font-bold text-slate-900">도시철도 강서선 & 도로망</h3>
           <ul class="text-xs text-slate-600 space-y-2 list-disc pl-4">
-            <li><strong>강서선 트램:</strong> 대저역~에코델타~명지국제~명지오션시티 연결(21.1km) 핵심 종점 거점.</li>
+            <li><strong>강서선:</strong> 대저역~에코델타~명지국제~명지오션시티 연결(21.1km) 핵심 종점 거점.</li>
             <li><strong>광역 간선도로:</strong> 르노삼성대로, 신호대교, 을숙도대교 직통 연계.</li>
             <li><strong>광역 접근성:</strong> 부산 구도심, 창원, 김해 자차 20~30분대 손쉬운 접근.</li>
           </ul>
@@ -373,7 +351,7 @@
         <div class="flex flex-col md:flex-row md:items-center justify-between border-b border-slate-100 pb-4 gap-4">
           <div>
             <h3 class="font-bold text-slate-900">🎯 권역별 배후 수요층 및 집객 전략 탐색</h3>
-            <p class="text-xs text-slate-500">각 권역 버튼을 클릭하여 세부 타겟 프로필과 유입 동선을 확인하세요.</p>
+            <p class="text-xs text-slate-500">각 권역 버튼을 클릭하여 세부 타겟 프로필과 유입 동선을 확인하세요. 지속적인 인구 유입으로 배후 수요가 팽창 중입니다.</p>
           </div>
           <!-- Region Buttons -->
           <div class="flex flex-wrap gap-2" id="catchment-buttons">
@@ -393,7 +371,7 @@
 
           <!-- Chart 3: Catchment Chart Container -->
           <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
-            <h4 class="text-xs font-bold text-slate-700 text-center mb-2">권역별 세대 규모 비교 (가구 수)</h4>
+            <h4 class="text-xs font-bold text-slate-700 text-center mb-2">권역별 배후 수요 규모 비교</h4>
             <div class="chart-container" style="height:240px;">
               <canvas id="chartCatchment"></canvas>
             </div>
@@ -450,7 +428,7 @@
       <div class="bg-slate-900 text-white rounded-2xl p-6 shadow-sm border border-slate-800 space-y-6">
         <div>
           <span class="text-xs font-bold text-amber-400 tracking-wider uppercase">Parking & Traffic Solution</span>
-          <h3 class="text-xl font-bold text-white mt-1">대지 593평 기반 단독 자주식 주차장 및 3면 코너 순환 동선</h3>
+          <h3 class="text-xl font-bold text-white mt-1">대지 593평 기반 넉넉한 주차 공간 및 3면 코너 순환 동선</h3>
           <p class="text-slate-400 text-xs mt-1">
             모델하우스 방문 만족도를 높이고 불법 주정차 민원을 차단하는 효율적 동선 체계입니다.
           </p>
@@ -459,7 +437,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div class="bg-slate-800/80 p-4 rounded-xl border border-slate-700 space-y-2">
             <div class="text-amber-400 font-bold text-sm flex items-center gap-2">
-              <span>🚗</span> 자주식 광폭 주차면
+              <span>🚗</span> 넉넉한 주차 공간
             </div>
             <p class="text-xs text-slate-300 leading-relaxed">
               기계식 주차 타워에서 발생하는 출차 입고 대기, 기계 고장 및 대기 줄서기 현상이 전혀 없습니다. 대형 패밀리 SUV도 편안한 문콕 방지형 규격 적용.
@@ -570,7 +548,7 @@
             <div class="p-3 bg-slate-50 rounded-lg">
               <span class="text-slate-500 block mb-1">무상 양도 범위</span>
               <strong class="text-sm text-slate-900">기존 골조, 파사드, MEP 일체</strong>
-              <p class="text-[11px] text-slate-500 mt-1">신축 CAPEX 약 35억 원 상당 순수 세이브</p>
+              <p class="text-[11px] text-slate-500 mt-1">신축 CAPEX 약 30억 원 상당 순수 세이브</p>
             </div>
             <div class="p-3 bg-slate-50 rounded-lg">
               <span class="text-slate-500 block mb-1">원상복구 헤징지원</span>
@@ -591,9 +569,8 @@
           </div>
 
           <div class="bg-amber-800/50 p-4 rounded-xl border border-amber-500/40 space-y-2">
-            <div class="text-xs text-amber-200">총괄 대표이사</div>
-            <div class="text-lg font-bold text-white">조성열 대표</div>
-            <div class="text-sm font-black text-amber-300 tracking-wider">📞 010-2584-3115</div>
+            <div class="text-xs text-amber-200">연락처</div>
+            <div class="text-sm font-black text-amber-300 tracking-wider">📞 051-803-7522</div>
           </div>
         </div>
       </div>
@@ -657,7 +634,7 @@
     const catchmentData = {
       ocean: {
         title: "명지오션시티 (현장 반경 500m)",
-        scale: "10,000여 세대 기축 단지",
+        scale: "인구 2.9만 명 배후 수요",
         target: "입주 13~15년 차 교체 수요, 중대형 이동 희망 거주민",
         access: "도보 3~10분 거리, 일상 소비 동선 밀착",
         strategy: "11자 중심상권 남단 끝자락 입지로 지역민 일상 노출. 영구 오션뷰 VIP 라운지 연계 고급 마케팅 집중.",
@@ -665,15 +642,15 @@
       },
       eco: {
         title: "에코델타시티 (반경 3~5km)",
-        scale: "30,000가구 / 76,000명 계획",
+        scale: "30,000가구 계획 (인구 지속 유입 중)",
         target: "3040세대 무주택 특별공급 대기자, 신규 택지 청약자",
         access: "공항로/에코델타로 자차 7분 직결",
-        strategy: "대우건설 트레파크 완판으로 검증된 청약자 인지도 완비. 현장 임장 후 셔틀버스를 통한 모델하우스 직통 연계 관람 동선.",
+        strategy: "대우건설 '에코델타시티 푸르지오 트레파크' 1,370세대 완판으로 검증된 청약자 인지도 완비. 수만 명이 다녀간 검증된 입지.",
         badge: "차량 7분 연계"
       },
       intl: {
         title: "명지국제신도시 1·2단계 (반경 1.5~2km)",
-        scale: "28,000여 세대 조성",
+        scale: "인구 5.4만 명 배후 수요",
         target: "고소득 전문직, 신축 브랜드 분양 투자자, 인근 산단 종사자",
         access: "차량 5분 이내 진입, 중심대로 직통 연계",
         strategy: "부산 서부 법조·업무 중심 타운의 배후 평형 변경 갈아타기 수요 흡수.",
@@ -681,10 +658,10 @@
       },
       metro: {
         title: "부울경 광역 권역 (반경 20km)",
-        scale: "김해, 창원 진해구, 부산 사하·사상구",
+        scale: "김해, 창원 진해구, 부산 사하·사상·북구",
         target: "가덕도신공항 비전 투자자, 광역 산업단지 종사자",
         access: "신호대교, 을숙도대교, 남해고속도로 제2지선 20분대",
-        strategy: "593평 단독 대지의 광폭 자주식 주차 편의성을 앞세워 주말 원정 청약단 및 VIP 고객 집객.",
+        strategy: "593평 단독 대지의 넉넉한 주차 편의성을 앞세워 주말 원정 청약단 및 VIP 고객 집객.",
         badge: "광역 20분대"
       }
     };
@@ -711,7 +688,7 @@
           </div>
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
             <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
-              <span class="text-slate-500 block mb-0.5">공급 / 세대 규모</span>
+              <span class="text-slate-500 block mb-0.5">배후 인구 / 세대 규모</span>
               <strong class="text-slate-800">${data.scale}</strong>
             </div>
             <div class="bg-slate-50 p-3 rounded-lg border border-slate-100">
@@ -741,7 +718,7 @@
           datasets: [
             {
               label: '초기 건립비 (CAPEX + MEP)',
-              data: [40, 0],
+              data: [35, 0], // 수정: 40 -> 35
               backgroundColor: '#d97706',
               borderWidth: 0,
               borderRadius: 4
@@ -831,8 +808,8 @@
         data: {
           labels: ['명지오션', '에코델타', '명지국제'],
           datasets: [{
-            label: '계획/기축 가구 수 (만 세대)',
-            data: [1.0, 3.0, 2.8],
+            label: '인구 및 계획 세대',
+            data: [2.9, 3.0, 5.4], // 데이터 업데이트
             backgroundColor: ['#f59e0b', '#0d9488', '#6366f1'],
             borderRadius: 4
           }]
@@ -847,7 +824,8 @@
             tooltip: {
               callbacks: {
                 label: function(context) {
-                  return context.label + ': 약 ' + context.raw + '만 세대';
+                  let unit = context.label === '에코델타' ? '만 세대' : '만 명';
+                  return context.label + ': 약 ' + context.raw + unit;
                 }
               }
             }
